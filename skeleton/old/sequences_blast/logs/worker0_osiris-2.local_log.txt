@@ -1,0 +1,13 @@
+# Logfile created on 2011-05-16 13:09:36 +0200 by logger.rb/25413
+I, [2011-05-16 13:09:36#34320]  INFO -- : WORKER CONNECTED
+I, [2011-05-16 13:09:36#34320]  INFO -- : Worker connected to 0.0.0.0:50000
+I, [2011-05-16 13:09:36#34320]  INFO -- : Initial config: empty config
+I, [2011-05-16 13:09:39#34320]  INFO -- : EXITING WORKER
+I, [2011-05-16 13:09:39#34320]  INFO -- : Client 0 processed: 5 objs
+I, [2011-05-16 13:09:39#34320]  INFO -- : Client 0 proc rate: 1.7192286439996685 objects/seg
+I, [2011-06-13 13:04:46#38661]  INFO -- : WORKER CONNECTED
+I, [2011-06-13 13:04:46#38661]  INFO -- : Worker connected to 0.0.0.0:50000
+I, [2011-06-13 13:04:46#38661]  INFO -- : Initial config: empty config
+I, [2011-06-13 13:04:49#38661]  INFO -- : EXITING WORKER
+I, [2011-06-13 13:04:49#38661]  INFO -- : Client 0 processed: 5 objs
+I, [2011-06-13 13:04:49#38661]  INFO -- : Client 0 proc rate: 1.7372137592888819 objects/seg

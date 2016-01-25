@@ -1,0 +1,52 @@
+#!/usr/bin/env ruby
+
+source_base= File.join(File.dirname(File.dirname(__FILE__)),'skeleton')
+
+if ARGV.count<2
+  puts "Tool to create a scbi_mapreduce demo application that you can use as a template"
+  puts
+  puts "Usage #{$0} app_name template"
+  puts
+  puts "E.g.: #{$0} my_app simple"
+  puts
+  puts "====== AVAILABLE TEMPLATES ======"
+
+  s=`ls #{source_base}`
+  puts s
+  
+  exit
+end
+
+app_name = ARGV[0]
+template = ARGV[1]
+
+if File.exists?(app_name)
+  puts "#{app_name} already exists, aborting"
+  exit -1
+end
+
+source_base= File.join(source_base,template)
+
+files=['main.rb','my_worker.rb','my_worker_manager.rb']
+
+puts "Creating scbi_mapreduce application: #{app_name}"
+puts
+puts "Creating files:"
+puts "="*20
+system("cp -r #{source_base} #{app_name}")
+
+# puts files
+s=`find #{app_name}`
+puts s
+
+description_file=File.join(source_base,'README.txt')
+
+if File.exists?(description_file)
+  puts
+  puts File.read(description_file)
+end
+
+# files.each do |file|
+#   puts "Creating file: #{file}"
+#   system("cp -r #{File.join(source_base,file)} #{app_name}")
+# end
