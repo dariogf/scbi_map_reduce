@@ -152,6 +152,10 @@ module ScbiMapreduce
 
     end
 
+    def self.global_error_received(error_exception)
+
+    end
+
     def next_work
 
     end
@@ -389,6 +393,7 @@ module ScbiMapreduce
         
         t=Time.now_us
         
+        begin
         # prepare new data
         @@chunk_size.times do
           obj=next_work
@@ -398,6 +403,13 @@ module ScbiMapreduce
             # add to obj array
             objs << obj
           end
+        end
+        rescue Exception => e
+          $SERVER_LOG.error("Exception creating next_work. Worker, quit!")
+          send_object(:sleep)
+          self.class.global_error_received(e)
+
+          #raise e
         end
         
         @@total_read_time+=(Time.now_us - t)

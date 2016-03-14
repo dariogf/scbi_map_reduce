@@ -41,7 +41,7 @@ module ScbiMapreduce
 
     def launch_workers
 
-      if system("which srun > /dev/null 2>&1")
+      if system("which srun > /dev/null 2>&1") && (!ENV['SLURM_PROCID'].to_s.empty?)
           $LAUNCHER_LOG.info "SLURM DETECTED"
           $LAUNCHER_LOG.info "Launching #{@workers} workers via srun"
           launch_workers_srun
@@ -54,10 +54,10 @@ module ScbiMapreduce
 
     def launch_workers_srun
       # TODO - si aqui falla algo, no peta, se bloquea
-      $LAUNCHER_LOG.info "Launching #{@workers} local workers"
+      $LAUNCHER_LOG.info "Launching #{@workers} srun workers"
         
         pid=fork{
-          $LAUNCHER_LOG.info "Connecting #{@workers} local workers to #{@server_ip}:#{@server_port}"
+          $LAUNCHER_LOG.info "Connecting #{@workers} srun workers to #{@server_ip}:#{@server_port}"
           cmd = "srun #{File.join(File.dirname(__FILE__),'main_worker.rb')} auto #{server_ip} #{server_port} #{@worker_file}"
           $LAUNCHER_LOG.info cmd
           exec(cmd)
@@ -139,6 +139,12 @@ module ScbiMapreduce
 
 
     def launch_external_workers(workers)
+
+      #skip if slurm detected
+      if system("which srun > /dev/null 2>&1")
+        return
+      end
+
       puts "Launching #{workers.count} external workers: #{workers}"
       puts "INIT_ENV_FILE: #{@init_env_file}"
       

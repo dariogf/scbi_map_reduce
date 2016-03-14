@@ -96,12 +96,16 @@ module ScbiMapreduce
 
     end
 
+    
+
+
     #  Start a EventMachine loop acting as a server for incoming workers connections
     def start_server
 
       # set a custom error handler, otherwise errors are silently ignored when they occurs inside a callback.
       EM.error_handler{ |e|
         $SERVER_LOG.error(e.message + ' => ' + e.backtrace.join("\n"))
+        @work_manager_class.global_error_received(e)
       }
       
       # $SERVER_LOG.info("Installing INT and TERM traps in #{@work_manager_class}")
